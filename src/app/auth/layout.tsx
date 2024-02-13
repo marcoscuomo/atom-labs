@@ -1,5 +1,6 @@
 import { Flame } from 'lucide-react'
 import type { Metadata } from 'next'
+import { Toaster } from 'sonner'
 
 export const metadata: Metadata = {
   title: 'Atom labs! - Login',
@@ -22,6 +23,7 @@ export default function AuthLayout({
       </div>
 
       <div className="relative flex flex-col items-center justify-center">
+        <Toaster richColors />
         {children}
       </div>
     </div>

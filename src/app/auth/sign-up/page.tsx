@@ -1,10 +1,46 @@
+'use client'
+
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
+import { z } from 'zod'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 
+const signUpForm = z.object({
+  restaurantName: z.string(),
+  managerName: z.string(),
+  phone: z.string(),
+  email: z.string().email(),
+})
+
+type SignUpForm = z.infer<typeof signUpForm>
+
 export default function SignUp() {
+  const router = useRouter()
+
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm<SignUpForm>()
+
+  async function handleSignup(data: SignUpForm) {
+    try {
+      toast.success('Restaurante cadastrado com sucesso', {
+        action: {
+          label: 'Login',
+          onClick: () => router.push(`sign-in?email=${data.email}`),
+        },
+      })
+    } catch {
+      toast.error('Erro ao cadastrar o restaurante')
+    }
+  }
+
   return (
     <div className="p-8">
       <Button variant="ghost" asChild className="absolute right-8 top-8">
@@ -21,28 +57,34 @@ export default function SignUp() {
           </p>
         </div>
 
-        <form className="space-y-4">
+        <form className="space-y-4" onSubmit={handleSubmit(handleSignup)}>
           <div className="space-y-2">
-            <Label htmlFor="restanrantName">Nome do restaurante</Label>
-            <Input type="text" id="restanrantName" />
+            <Label htmlFor="restaurantName">Nome do restaurante</Label>
+            <Input
+              type="text"
+              id="restaurantName"
+              {...register('restaurantName')}
+            />
           </div>
 
           <div className="space-y-2">
             <Label htmlFor="managerName">Seu nome</Label>
-            <Input type="text" id="managerName" />
+            <Input type="text" id="managerName" {...register('managerName')} />
           </div>
 
           <div className="space-y-2">
             <Label htmlFor="email">Seu email</Label>
-            <Input type="email" id="email" />
+            <Input type="email" id="email" {...register('email')} />
           </div>
 
           <div className="space-y-2">
             <Label htmlFor="phone">Seu celular</Label>
-            <Input type="tel" id="phone" />
+            <Input type="tel" id="phone" {...register('phone')} />
           </div>
 
-          <Button className="w-full">Finalizar cadastro</Button>
+          <Button className="w-full" type="submit" disabled={isSubmitting}>
+            Finalizar cadastro
+          </Button>
 
           <p className="px-6 text-center text-sm leading-relaxed text-muted-foreground">
             Ao continuar você concorda com nossos{' '}
