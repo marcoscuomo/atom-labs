@@ -3,6 +3,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter as FontSans } from 'next/font/google'
 
+import { ThemeProvider } from '@/components/theme/theme-provider'
 import { cn } from '@/lib/utils'
 
 export const fontSans = FontSans({
@@ -11,7 +12,7 @@ export const fontSans = FontSans({
 })
 
 export const metadata: Metadata = {
-  title: 'Atom labs!',
+  title: 'Atom labs! - Dasboard',
   description: 'Your smart system',
 }
 
@@ -23,12 +24,16 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body
-        className={cn(
-          'bg-background min-h-screen font-sans antialiased',
-          fontSans.variable,
-        )}
+        className={cn('bg-background font-sans antialiased', fontSans.variable)}
       >
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <div className="flex min-h-screen flex-col">{children}</div>
+        </ThemeProvider>
       </body>
     </html>
   )
