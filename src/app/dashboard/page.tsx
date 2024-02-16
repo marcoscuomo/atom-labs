@@ -1,4 +1,9 @@
+import DayOrdersAmountCard from './day-orders-amount-card'
+import MonthCanceldOrdersCard from './month-canceled-orders-amount-card'
+import MonthOrdersAmountCard from './month-orders-amount-card'
 import MonthRevenueCard from './month-revenue-card'
+import PopularProductsChart from './popular-products-chart'
+import RevenueChart from './revenue-chart'
 
 export default function Home() {
   return (
@@ -8,14 +13,14 @@ export default function Home() {
 
         <div className="grid grid-cols-4 gap-4">
           <MonthRevenueCard />
-          <div>Pedidos/mes</div>
-          <div>Pedidos/dia</div>
-          <div>cancelamento</div>
+          <MonthOrdersAmountCard />
+          <DayOrdersAmountCard />
+          <MonthCanceldOrdersCard />
         </div>
 
         <div className="grid grid-cols-9 gap-4">
-          <div>Grafico 1</div>
-          <div>Grafico 2</div>
+          <RevenueChart />
+          <PopularProductsChart />
         </div>
       </div>
     </div>
