@@ -8,7 +8,7 @@ import {
 } from '@/components/ui/table'
 
 import OrderTableFilters from './order.table-filters'
-import OrderTableRow from './Order-table-row'
+import OrderTableRow from './order-table-row'
 
 interface odersProps {
   orderId: number
